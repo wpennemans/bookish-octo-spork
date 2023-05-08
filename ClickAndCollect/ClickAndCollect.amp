@@ -51,9 +51,9 @@
         var Q4_3 = Platform.Request.GetFormField("question43");
         var Q4_4 = Platform.Request.GetFormField("question44");
         var Q4_5 = Platform.Request.GetFormField("question45");
-        var Q4_other = Platform.Request.GetFormField("question4Other");
+        var Q4_other = Platform.Request.GetFormField("question4other");
         var Q5 = Platform.Request.GetFormField("question5");
-        var Q5_bis = Platform.Request.GetFormField("question5Bis");
+        var Q5_bis = Platform.Request.GetFormField("question5sub");
 
         var formError = '';
         formError += formError + (validateEmpty(Q1) ? '' : 'question1;');
@@ -138,31 +138,31 @@
                         </h2>
                         <div class="ques ques1">
                             <label class="cont-box">%%=v(@lblQuestion1Answer1)=%%
-                                <input id="Q1_1" type="checkbox" name="question1" value="1">
+                                <input id="Q1_1" type="checkbox" name="question1[]" value="1">
                                 <span class="checkmark"></span>
                             </label>
                             <label class="cont-box">%%=v(@lblQuestion1Answer2)=%%
-                                <input id="Q1_2" type="checkbox" name="question1" value="2">
+                                <input id="Q1_2" type="checkbox" name="question1[]" value="2">
                                 <span class="checkmark"></span>
                             </label>
                             <label class="cont-box">%%=v(@lblQuestion1Answer3)=%%
-                                <input id="Q1_3" type="checkbox" name="question1" value="3">
+                                <input id="Q1_3" type="checkbox" name="question1[]" value="3">
                                 <span class="checkmark"></span>
                             </label>
                             <label class="cont-box">%%=v(@lblQuestion1Answer4)=%%
-                                <input id="Q1_4" type="checkbox" name="question1" value="4">
+                                <input id="Q1_4" type="checkbox" name="question1[]" value="4">
                                 <span class="checkmark"></span>
                             </label>
                             <label class="cont-box">%%=v(@lblQuestion1Answer5)=%%
-                                <input id="Q1_5" type="checkbox" name="question1" value="5">
+                                <input id="Q1_5" type="checkbox" name="question1[]" value="5">
                                 <span class="checkmark"></span>
                             </label>
                             <label class="cont-box">%%=v(@lblQuestion1Answer6)=%%
-                                <input id="Q1_6" type="checkbox" name="question1" value="6">
+                                <input id="Q1_6" type="checkbox" name="question1[]" value="6">
                                 <span class="checkmark"></span>
                             </label>
                             <label class="cont-box">%%=v(@lblQuestion1Answer7)=%%
-                                <input id="Q1_7" type="checkbox" name="question1" value="7">
+                                <input id="Q1_7" type="checkbox" name="question1[]" value="7">
                                 <span class="checkmark"></span>
                             </label>
                         </div>
@@ -469,6 +469,11 @@
             var q4_5 = '%%=v(@q4_5)=%%'
             var q5 = '%%=v(@q5)=%%'
 
+            if (q1 != '') {
+                $.each(q1.split(/\|/), function(i, val) {
+                    $('input[name="question1"][value="' + val + '"]').prop('checked', true);
+                })
+            }
             if (q2 != '') { $('input:radio[name=question2]').filter('[value=' + q2 + ']').prop('checked', true); }
             if (q3 != '') { $('input:radio[name=question3]').filter('[value=' + q3 + ']').prop('checked', true); }
             if (q4_1 != '') { $('input:radio[name=question41]').filter('[value=' + q4_1 + ']').prop('checked', true); }
@@ -477,11 +482,7 @@
             if (q4_4 != '') { $('input:radio[name=question44]').filter('[value=' + q4_4 + ']').prop('checked', true); }
             if (q4_5 != '') { $('input:radio[name=question45]').filter('[value=' + q4_5 + ']').prop('checked', true); }
             if (q5 != '') { $('input:radio[name=question5]').filter('[value=' + q5 + ']').prop('checked', true); }
-            if (q1 != '') {
-                $.each(q1.split(/\|/), function(i, val) {
-                    $('input[name="question1"][value="' + val + '"]').prop('checked', true);
-                })
-            }
+            
         </script>
     </body>
 </html>
