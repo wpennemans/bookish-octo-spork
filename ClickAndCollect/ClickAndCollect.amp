@@ -418,6 +418,7 @@
         </script>
         <script src="%%=v(@refJs)=%%"></script>
         <script type="text/javascript">
+            console.log('caching gone');
             var q1 = '%%=v(@q1)=%%'
             var q2 = '%%=v(@q2)=%%'
             var q3 = '%%=v(@q3)=%%'
