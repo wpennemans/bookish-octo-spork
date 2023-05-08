@@ -17,7 +17,7 @@
     SET @rows = LookupRows("MDE_QK_USERS","CONTACT_KEY",@SubscriberKey)
     SET @rowCount = rowcount(@rows)
 
-    if @rowCount = 0 then
+    if @rowCount == 0 then
         RedirectTo(@defaultRedirect)
     endif
 
