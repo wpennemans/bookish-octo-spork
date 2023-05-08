@@ -17,8 +17,6 @@
     }
 </script>
 
-%%=TreatAsContent(HTTPGet(STRING, BOOLEAN, INT, STRING))=%%
-
 %%[
     IF @displayLanguage != 'nl-BE' AND @displayLanguage != 'fr-LU' THEN
        SET @displayLanguage = 'fr-BE'
