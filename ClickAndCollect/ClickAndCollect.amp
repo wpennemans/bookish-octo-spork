@@ -1,19 +1,19 @@
 %%[
 
+    /* Set default redirect */
+    VAR @defaultRedirect
     SET @defaultRedirect = 'https://www.quick.be/'
-    
-    /*********
-    ** Lookup user based on subscriberKey and populate userLanguage
-    *********/
 
-    VAR @rows, @rowCount, @SubscriberKey
-
+    /* Set subscriber key */
+    VAR @SubscriberKey
     SET @SubscriberKey = [_SubscriberKey]
 
     IF Empty(@SubscriberKey) THEN
         RedirectTo(@defaultRedirect)
     ENDIF
 
+    /* Get user context */
+    VAR @rows, @rowCount
     SET @rows = LookupRows("MDE_QK_USERS","CONTACT_KEY",@SubscriberKey)
     SET @rowCount = rowcount(@rows)
 
@@ -21,6 +21,7 @@
         RedirectTo(@defaultRedirect)
     endif
 
+    /* Set displayLanguage */
     VAR @displayLanguage
     SET @displayLanguage = iif(Empty(RequestParameter('lang')), attributeValue('LANGUAGE'), RequestParameter('lang'))
     
