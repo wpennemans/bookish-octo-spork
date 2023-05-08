@@ -1,19 +1,19 @@
 <script runat=server language="javascript">
     Platform.Load("Core", "1");
 
-    /* Variable.SetValue('@refJS', 'https://raw.githubusercontent.com/wpennemans/bookish-octo-spork/main/ClickAndCollect/script.js');
-    Variable.SetValue('@refCSS', 'https://raw.githubusercontent.com/wpennemans/bookish-octo-spork/main/ClickAndCollect/style.css'); */
+    Variable.SetValue("@refJS", "https://raw.githubusercontent.com/wpennemans/bookish-octo-spork/main/ClickAndCollect/script.js");
+    Variable.SetValue("@refCSS", "https://raw.githubusercontent.com/wpennemans/bookish-octo-spork/main/ClickAndCollect/style.css");
 
     if (Platform.Request.Method == "POST") {
-        /* Variable.SetValue('@q1', Platform.Request.GetFormField('question1'));
-        Variable.SetValue('@q2', Platform.Request.GetFormField('question2'));
-        Variable.SetValue('@q3', Platform.Request.GetFormField('question3'));
-        Variable.SetValue('@q4_1', Platform.Request.GetFormField('question41'));
-        Variable.SetValue('@q4_2', Platform.Request.GetFormField('question42'));
-        Variable.SetValue('@q4_3', Platform.Request.GetFormField('question43'));
-        Variable.SetValue('@q4_4', Platform.Request.GetFormField('question44'));
-        Variable.SetValue('@q4_5', Platform.Request.GetFormField('question45'));
-        Variable.SetValue('@q5', Platform.Request.GetFormField('question5')); */
+        Variable.SetValue("@q1", Platform.Request.GetFormField("question1"));
+        Variable.SetValue("@q2", Platform.Request.GetFormField("question2"));
+        Variable.SetValue("@q3", Platform.Request.GetFormField("question3"));
+        Variable.SetValue("@q4_1", Platform.Request.GetFormField("question41"));
+        Variable.SetValue("@q4_2", Platform.Request.GetFormField("question42"));
+        Variable.SetValue("@q4_3", Platform.Request.GetFormField("question43"));
+        Variable.SetValue("@q4_4", Platform.Request.GetFormField("question44"));
+        Variable.SetValue("@q4_5", Platform.Request.GetFormField("question45"));
+        Variable.SetValue("@q5", Platform.Request.GetFormField("question5"));
     }
 </script>
 
