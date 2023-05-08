@@ -50,9 +50,11 @@
         <title> Quick - Survey</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link href="https://s3.eu-central-1.amazonaws.com/quickbelux/web/img/favicon.png" type="image/x-icon" rel="shortcut icon" />
-        <link href="%%=v(@refCss)=%%" rel="stylesheet">
         <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.min.js"></script>
+        <style>
+            %%=TreatAsContent(HTTPGet(@refCss))=%%
+        </style>
     </head>
     <body class="body">
         <!-- BLOCK :: Banner -->
@@ -413,10 +415,9 @@
 
         </section>
         <!-- /BLOCK :: Survey -->
-
         <script>
+            %%=TreatAsContent(HTTPGet(@refJS))=%%
         </script>
-        <script src="%%=v(@refJs)=%%"></script>
         <script type="text/javascript">
             console.log('caching gone');
             var q1 = '%%=v(@q1)=%%'
