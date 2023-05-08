@@ -1,6 +1,6 @@
 %%[
 
-    VAR @redirectURL = 'https://www.quick.be/'
+    SET @redirectURL = 'https://www.quick.be/'
     
     /*********
     ** Lookup user based on subscriberKey and populate userLanguage
