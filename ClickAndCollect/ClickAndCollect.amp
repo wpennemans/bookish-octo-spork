@@ -458,7 +458,7 @@
             %%=TreatAsContent(HTTPGet(@refJS))=%%
         </script>
         <script type="text/javascript">
-            console.log('caching gone', `%%=v(@q1)=%%`);
+            
             var q1 = '%%=v(@q1)=%%'
             var q2 = '%%=v(@q2)=%%'
             var q3 = '%%=v(@q3)=%%'
@@ -468,6 +468,9 @@
             var q4_4 = '%%=v(@q4_4)=%%'
             var q4_5 = '%%=v(@q4_5)=%%'
             var q5 = '%%=v(@q5)=%%'
+            console.log('source', q1);
+            console.log('dest,', q1.split(','));
+            console.log('dest|', q1.split('|'));
 
             if (q1 != '') {
                 $.each(q1.split(','), function(i, val) {
