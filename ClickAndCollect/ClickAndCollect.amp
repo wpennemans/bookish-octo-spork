@@ -33,16 +33,51 @@
     Variable.SetValue("@refJS", "https://raw.githubusercontent.com/wpennemans/bookish-octo-spork/main/ClickAndCollect/script.js");
     Variable.SetValue("@refCSS", "https://raw.githubusercontent.com/wpennemans/bookish-octo-spork/main/ClickAndCollect/style.css");
 
+    function validateEmpty(value){
+        return !!value;
+    }
+
+    function validateBetween(value, low, high){
+        return !!value && (value >= low && value <= high);
+    }
+
     if (Platform.Request.Method == "POST") {
-        Variable.SetValue("@q1", Platform.Request.GetFormField("question1"));
-        Variable.SetValue("@q2", Platform.Request.GetFormField("question2"));
-        Variable.SetValue("@q3", Platform.Request.GetFormField("question3"));
-        Variable.SetValue("@q4_1", Platform.Request.GetFormField("question41"));
-        Variable.SetValue("@q4_2", Platform.Request.GetFormField("question42"));
-        Variable.SetValue("@q4_3", Platform.Request.GetFormField("question43"));
-        Variable.SetValue("@q4_4", Platform.Request.GetFormField("question44"));
-        Variable.SetValue("@q4_5", Platform.Request.GetFormField("question45"));
-        Variable.SetValue("@q5", Platform.Request.GetFormField("question5"));
+
+        var Q1 = Platform.Request.GetFormField("question1");
+        var Q2 = Platform.Request.GetFormField("question2");
+        var Q3 = Platform.Request.GetFormField("question3");
+        var Q4_1 = Platform.Request.GetFormField("question41");
+        var Q4_2 = Platform.Request.GetFormField("question42");
+        var Q4_3 = Platform.Request.GetFormField("question43");
+        var Q4_4 = Platform.Request.GetFormField("question44");
+        var Q4_5 = Platform.Request.GetFormField("question45");
+        var Q4_other = Platform.Request.GetFormField("question4Other");
+        var Q5 = Platform.Request.GetFormField("question5");
+        var Q5_bis = Platform.Request.GetFormField("question5Bis");
+
+        var formError = '';
+        formError += formError + (validateEmpty(Q1) ? '' : 'question1;');
+        formError += formError + (validateBetween(Q2,0,5) ? '' : 'question2;');
+        formError += formError + (validateBetween(Q3,0,6) ? '' : 'question3;');
+        formError += formError + (validateBetween(Q4_1,0,6) ? '' : 'question41;');
+        formError += formError + (validateBetween(Q4_2,0,6) ? '' : 'question42;');
+        formError += formError + (validateBetween(Q4_3,0,6) ? '' : 'question43;');
+        formError += formError + (validateBetween(Q4_4,0,6) ? '' : 'question44;');
+        formError += formError + (validateBetween(Q4_5,0,6) ? '' : 'question45;');
+        formError += formError + (validateEmpty(Q5) ? '' : 'question5;');        
+
+        Variable.SetValue("@Q1", Q1);
+        Variable.SetValue("@Q2", Q2);
+        Variable.SetValue("@Q3", Q3);
+        Variable.SetValue("@Q4_1", Q4_1);
+        Variable.SetValue("@Q4_2", Q4_2);
+        Variable.SetValue("@Q4_3", Q4_3);
+        Variable.SetValue("@Q4_4", Q4_4);
+        Variable.SetValue("@Q4_5", Q4_5);
+        Variable.SetValue("@Q4_other", Q4_other);
+        Variable.SetValue("@Q5", Q5);
+        Variable.SetValue("@Q5_bis", Q5_bis);
+        Variable.SetValue("@formError", formError);
     }
 </script>
 
@@ -94,40 +129,40 @@
         <!-- BLOCK :: Survey -->
         <section class="block block-survey">
             <div class="inner">
-                <form id="surveyForm" method="POST" action="[%link(100)%]">
+                <form id="surveyForm" method="POST" action="%%=RequestParameter('PAGEURL')=%%">
                     <!-- question1 -->
                     <div class="form-group">
-                        <h2 class="[%if(any(ge(find(validationErrorOutput(),'question1'),0)),'error','')%]">
+                        <h2 class="%%=IIf(IndexOf(@formError,'question1') > 0, 'error', '')=%%">
                             %%=v(@lblQuestion1Title)=%%
                             <!-- <br /> <span>(meerdere opties mogelijk)</span> -->
                         </h2>
                         <div class="ques ques1">
                             <label class="cont-box">%%=v(@lblQuestion1Answer1)=%%
-                                <input id="q1_1" type="checkbox" name="question1" value="1">
+                                <input id="Q1_1" type="checkbox" name="question1" value="1">
                                 <span class="checkmark"></span>
                             </label>
                             <label class="cont-box">%%=v(@lblQuestion1Answer2)=%%
-                                <input id="q1_2" type="checkbox" name="question1" value="2">
+                                <input id="Q1_2" type="checkbox" name="question1" value="2">
                                 <span class="checkmark"></span>
                             </label>
                             <label class="cont-box">%%=v(@lblQuestion1Answer3)=%%
-                                <input id="q1_3" type="checkbox" name="question1" value="3">
+                                <input id="Q1_3" type="checkbox" name="question1" value="3">
                                 <span class="checkmark"></span>
                             </label>
                             <label class="cont-box">%%=v(@lblQuestion1Answer4)=%%
-                                <input id="q1_4" type="checkbox" name="question1" value="4">
+                                <input id="Q1_4" type="checkbox" name="question1" value="4">
                                 <span class="checkmark"></span>
                             </label>
                             <label class="cont-box">%%=v(@lblQuestion1Answer5)=%%
-                                <input id="q1_5" type="checkbox" name="question1" value="5">
+                                <input id="Q1_5" type="checkbox" name="question1" value="5">
                                 <span class="checkmark"></span>
                             </label>
                             <label class="cont-box">%%=v(@lblQuestion1Answer6)=%%
-                                <input id="q1_6" type="checkbox" name="question1" value="6">
+                                <input id="Q1_6" type="checkbox" name="question1" value="6">
                                 <span class="checkmark"></span>
                             </label>
                             <label class="cont-box">%%=v(@lblQuestion1Answer7)=%%
-                                <input id="q1_7" type="checkbox" name="question1" value="7">
+                                <input id="Q1_7" type="checkbox" name="question1" value="7">
                                 <span class="checkmark"></span>
                             </label>
                         </div>
@@ -136,27 +171,27 @@
 
                     <!-- question2 -->
                     <div class="form-group">
-                        <h2 class="[%if(any(ge(find(validationErrorOutput(),'question2'),0)),'error','')%]">
+                        <h2 class="%%=IIf(IndexOf(@formError,'question2') > 0, 'error', '')=%%">
                             %%=v(@lblQuestion2Title)=%%
                         </h2>
                         <div class="ques ques2">
                             <label class="cont-box con-box-inside">
-                                <input id="q2_1" type="radio" name="question2" value="1">
+                                <input id="Q2_1" type="radio" name="question2" value="1">
                                 <span class="checkmark">%%=v(@lblQuestion2Answer1)=%%</span>
                             </label>
 
                             <label class="cont-box con-box-inside">
-                                <input id="q2_2" type="radio" name="question2" value="2">
+                                <input id="Q2_2" type="radio" name="question2" value="2">
                                 <span class="checkmark">%%=v(@lblQuestion2Answer2)=%%</span>
                             </label>
 
                             <label class="cont-box con-box-inside">
-                                <input id="q2_3" type="radio" name="question2" value="3">
+                                <input id="Q2_3" type="radio" name="question2" value="3">
                                 <span class="checkmark">%%=v(@lblQuestion2Answer3)=%%</span>
                             </label>
 
                             <label class="cont-box con-box-inside">
-                                <input id="q2_4" type="radio" name="question2" value="4">
+                                <input id="Q2_4" type="radio" name="question2" value="4">
                                 <span class="checkmark">%%=v(@lblQuestion2Answer4)=%%</span>
                             </label>
                         </div>
@@ -165,7 +200,7 @@
 
                     <!-- question3 -->
                     <div class="form-group">
-                        <h2 class="[%if(any(ge(find(validationErrorOutput(),'question3'),0)),'error','')%]">
+                        <h2 class="%%=IIf(IndexOf(@formError,'question3') > 0, 'error', '')=%%">
                             %%=v(@lblQuestion3Title)=%%
                         </h2>
                         <div class="ques ques3">
@@ -174,23 +209,23 @@
                             </label>
 
                             <label class="cont-box cont-box-circle">
-                                <input id="q3_1" type="radio" name="question3" value="1">
+                                <input id="Q3_1" type="radio" name="question3" value="1">
                                 <span class="checkmark"></span>
                             </label>
                             <label class="cont-box cont-box-circle">
-                                <input id="q3_2" type="radio" name="question3" value="2">
+                                <input id="Q3_2" type="radio" name="question3" value="2">
                                 <span class="checkmark"></span>
                             </label>
                             <label class="cont-box cont-box-circle">
-                                <input id="q3_3" type="radio" name="question3" value="3">
+                                <input id="Q3_3" type="radio" name="question3" value="3">
                                 <span class="checkmark"></span>
                             </label>
                             <label class="cont-box cont-box-circle">
-                                <input id="q3_4" type="radio" name="question3" value="4">
+                                <input id="Q3_4" type="radio" name="question3" value="4">
                                 <span class="checkmark"></span>
                             </label>
                             <label class="cont-box cont-box-circle">
-                                <input id="q3_5" type="radio" name="question3" value="5">
+                                <input id="Q3_5" type="radio" name="question3" value="5">
                                 <span class="checkmark"></span>
                             </label>
                             <label>
@@ -202,12 +237,12 @@
 
                     <!-- question4 -->
                     <div class="form-group">
-                        <h2 class="[%if(any(ge(find(validationErrorOutput(),'question4'),0)),'error','')%]">
+                        <h2 class="%%=IIf(IndexOf(@formError,'question4') > 0, 'error', '')=%%">
                             %%=v(@lblQuestion4Title)=%%
                         </h2>
                         <div class="ques ques4">
                             <h3>%%=v(@lblQuestion4Intro)=%%</h3>
-                            <h4 for="question41" class="[%if(any(ge(find(validationErrorOutput(),'question41'),0)),'error','')%]">
+                            <h4 for="question41" class="%%=IIf(IndexOf(@formError,'question41') > 0, 'error', '')=%%">
                                 %%=v(@lblQuestion4_1)=%%
                             </h4>
                             <div class="cont-ques cont-ques-1">
@@ -215,23 +250,23 @@
                                     1 <br /><span>(%%=v(@lblRatingBad)=%%)</span>
                                 </label>
                                 <label class="cont-box cont-box-circle">
-                                    <input id="q41_1" type="radio" name="question41" value="1">
+                                    <input id="Q41_1" type="radio" name="question41" value="1">
                                     <span class="checkmark"></span>
                                 </label>
                                 <label class="cont-box cont-box-circle">
-                                    <input id="q41_2" type="radio" name="question41" value="2">
+                                    <input id="Q41_2" type="radio" name="question41" value="2">
                                     <span class="checkmark"></span>
                                 </label>
                                 <label class="cont-box cont-box-circle">
-                                    <input id="q41_3" type="radio" name="question41" value="3">
+                                    <input id="Q41_3" type="radio" name="question41" value="3">
                                     <span class="checkmark"></span>
                                 </label>
                                 <label class="cont-box cont-box-circle">
-                                    <input id="q41_4" type="radio" name="question41" value="4">
+                                    <input id="Q41_4" type="radio" name="question41" value="4">
                                     <span class="checkmark"></span>
                                 </label>
                                 <label class="cont-box cont-box-circle">
-                                    <input id="q41_5" type="radio" name="question41" value="5">
+                                    <input id="Q41_5" type="radio" name="question41" value="5">
                                     <span class="checkmark"></span>
                                 </label>
                                 <label>
@@ -239,7 +274,7 @@
                                 </label>
                             </div>
 
-                            <h4 for="question42" class="[%if(any(ge(find(validationErrorOutput(),'question42'),0)),'error','')%]">
+                            <h4 for="question42" class="%%=IIf(IndexOf(@formError,'question42') > 0, 'error', '')=%%">
                                 %%=v(@lblQuestion4_2)=%%
                             </h4>
                             <div class="cont-ques cont-ques-2">
@@ -247,23 +282,23 @@
                                     1 <br /><span>(%%=v(@lblRatingBad)=%%)</span>
                                 </label>
                                 <label class="cont-box cont-box-circle">
-                                    <input id="q42_1" type="radio" name="question42" value="1">
+                                    <input id="Q42_1" type="radio" name="question42" value="1">
                                     <span class="checkmark"></span>
                                 </label>
                                 <label class="cont-box cont-box-circle">
-                                    <input id="q42_2" type="radio" name="question42" value="2">
+                                    <input id="Q42_2" type="radio" name="question42" value="2">
                                     <span class="checkmark"></span>
                                 </label>
                                 <label class="cont-box cont-box-circle">
-                                    <input id="q42_3" type="radio" name="question42" value="3">
+                                    <input id="Q42_3" type="radio" name="question42" value="3">
                                     <span class="checkmark"></span>
                                 </label>
                                 <label class="cont-box cont-box-circle">
-                                    <input id="q42_4" type="radio" name="question42" value="4">
+                                    <input id="Q42_4" type="radio" name="question42" value="4">
                                     <span class="checkmark"></span>
                                 </label>
                                 <label class="cont-box cont-box-circle">
-                                    <input id="q42_5" type="radio" name="question42" value="5">
+                                    <input id="Q42_5" type="radio" name="question42" value="5">
                                     <span class="checkmark"></span>
                                 </label>
                                 <label>
@@ -271,7 +306,7 @@
                                 </label>
                             </div>
 
-                            <h4 for="question43" class="[%if(any(ge(find(validationErrorOutput(),'question43'),0)),'error','')%]">
+                            <h4 for="question43" class="%%=IIf(IndexOf(@formError,'question43') > 0, 'error', '')=%%">
                                 %%=v(@lblQuestion4_3)=%%
                             </h4>
                             <div class="cont-ques cont-ques-3">
@@ -279,23 +314,23 @@
                                     1 <br /><span>(%%=v(@lblRatingBad)=%%)</span>
                                 </label>
                                 <label class="cont-box cont-box-circle">
-                                    <input id="q43_1" type="radio" name="question43" value="1">
+                                    <input id="Q43_1" type="radio" name="question43" value="1">
                                     <span class="checkmark"></span>
                                 </label>
                                 <label class="cont-box cont-box-circle">
-                                    <input id="q43_2" type="radio" name="question43" value="2">
+                                    <input id="Q43_2" type="radio" name="question43" value="2">
                                     <span class="checkmark"></span>
                                 </label>
                                 <label class="cont-box cont-box-circle">
-                                    <input id="q43_3" type="radio" name="question43" value="3">
+                                    <input id="Q43_3" type="radio" name="question43" value="3">
                                     <span class="checkmark"></span>
                                 </label>
                                 <label class="cont-box cont-box-circle">
-                                    <input id="q43_4" type="radio" name="question43" value="4">
+                                    <input id="Q43_4" type="radio" name="question43" value="4">
                                     <span class="checkmark"></span>
                                 </label>
                                 <label class="cont-box cont-box-circle">
-                                    <input id="q43_5" type="radio" name="question43" value="5">
+                                    <input id="Q43_5" type="radio" name="question43" value="5">
                                     <span class="checkmark"></span>
                                 </label>
                                 <label>
@@ -303,7 +338,7 @@
                                 </label>
                             </div>
 
-                            <h4 for="question44" class="[%if(any(ge(find(validationErrorOutput(),'question44'),0)),'error','')%]">
+                            <h4 for="question44" class="%%=IIf(IndexOf(@formError,'question44') > 0, 'error', '')=%%">
                                 %%=v(@lblQuestion4_4)=%%
                             </h4>
                             <div class="cont-ques cont-ques-4">
@@ -311,23 +346,23 @@
                                     1 <br /><span>(%%=v(@lblRatingBad)=%%)</span>
                                 </label>
                                 <label class="cont-box cont-box-circle">
-                                    <input id="q44_1" type="radio" name="question44" value="1">
+                                    <input id="Q44_1" type="radio" name="question44" value="1">
                                     <span class="checkmark"></span>
                                 </label>
                                 <label class="cont-box cont-box-circle">
-                                    <input id="q44_2" type="radio" name="question44" value="2">
+                                    <input id="Q44_2" type="radio" name="question44" value="2">
                                     <span class="checkmark"></span>
                                 </label>
                                 <label class="cont-box cont-box-circle">
-                                    <input id="q44_3" type="radio" name="question44" value="3">
+                                    <input id="Q44_3" type="radio" name="question44" value="3">
                                     <span class="checkmark"></span>
                                 </label>
                                 <label class="cont-box cont-box-circle">
-                                    <input id="q44_4" type="radio" name="question44" value="4">
+                                    <input id="Q44_4" type="radio" name="question44" value="4">
                                     <span class="checkmark"></span>
                                 </label>
                                 <label class="cont-box cont-box-circle">
-                                    <input id="q44_5" type="radio" name="question44" value="5">
+                                    <input id="Q44_5" type="radio" name="question44" value="5">
                                     <span class="checkmark"></span>
                                 </label>
                                 <label>
@@ -335,7 +370,7 @@
                                 </label>
                             </div>
 
-                            <h4 for="question45" class="[%if(any(ge(find(validationErrorOutput(),'question45'),0)),'error','')%]">
+                            <h4 for="question45" class="%%=IIf(IndexOf(@formError,'question45') > 0, 'error', '')=%%">
                                 %%=v(@lblQuestion4_5)=%%
                             </h4>
                             <div class="cont-ques cont-ques-5">
@@ -343,23 +378,23 @@
                                     1 <br /><span>(%%=v(@lblRatingBad)=%%)</span>
                                 </label>
                                 <label class="cont-box cont-box-circle">
-                                    <input id="q45_1" type="radio" name="question45" value="1">
+                                    <input id="Q45_1" type="radio" name="question45" value="1">
                                     <span class="checkmark"></span>
                                 </label>
                                 <label class="cont-box cont-box-circle">
-                                    <input id="q45_2" type="radio" name="question45" value="2">
+                                    <input id="Q45_2" type="radio" name="question45" value="2">
                                     <span class="checkmark"></span>
                                 </label>
                                 <label class="cont-box cont-box-circle">
-                                    <input id="q45_3" type="radio" name="question45" value="3">
+                                    <input id="Q45_3" type="radio" name="question45" value="3">
                                     <span class="checkmark"></span>
                                 </label>
                                 <label class="cont-box cont-box-circle">
-                                    <input id="q45_4" type="radio" name="question45" value="4">
+                                    <input id="Q45_4" type="radio" name="question45" value="4">
                                     <span class="checkmark"></span>
                                 </label>
                                 <label class="cont-box cont-box-circle">
-                                    <input id="q45_5" type="radio" name="question45" value="5">
+                                    <input id="Q45_5" type="radio" name="question45" value="5">
                                     <span class="checkmark"></span>
                                 </label>
                                 <label>
@@ -371,7 +406,8 @@
                                 %%=v(@lblOtherAnswer)=%%
                             </h4>
                             <textarea id="question4-other" name="question4other">
-                                [%if(ne(requestValue('question4other'),''),requestValue('question4other'),'')%]</textarea>
+                                %%=v(@Q4_other)=%%
+                            </textarea>
                             <input type="hidden" name="question4group" />
                         </div>
                     </div>
@@ -379,18 +415,18 @@
 
                     <!-- question5 -->
                     <div class="form-group">
-                        <h2 class="[%if(any(ge(find(validationErrorOutput(),'question5'),0)),'error','')%]">
+                        <h2 class="%%=IIf(IndexOf(@formError,'question5') > 0, 'error', '')=%%">
                             %%=v(@lblQuestion5Title)=%%
                         </h2>
                         <div class="ques ques5">
                             <div>
                                 <label class="cont-box con-box-inside">
-                                    <input id="q5_1" type="radio" name="question5" value="1">
+                                    <input id="Q5_1" type="radio" name="question5" value="1">
                                     <span class="checkmark">%%=v(@lblQuestion5Answer1)=%%</span>
                                 </label>
 
                                 <label class="cont-box con-box-inside">
-                                    <input id="q5_2" type="radio" name="question5" value="0">
+                                    <input id="Q5_2" type="radio" name="question5" value="0">
                                     <span class="checkmark">%%=v(@lblQuestion5Answer2)=%%</span>
                                 </label>
                             </div>
@@ -399,7 +435,7 @@
                                 %%=v(@lblQuestion5BisTitle)=%%
                             </h4>
                             <textarea id="question5sub" name="question5sub">
-                                [%if(ne(requestValue('question5sub'),''),requestValue('question5sub'),'')%]
+                                %%=v(@Q5_bis)=%%
                             </textarea>
                         </div>
                     </div>

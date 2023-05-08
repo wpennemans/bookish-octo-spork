@@ -5,17 +5,12 @@ var clsValidate = (function(){
 	this.init = function(callBackObj){
         
 		self.callBackObj = callBackObj;
-		$.validator.addMethod("checkEmail", function(value, element)
-		{
+		$.validator.addMethod("checkEmail", function(value, element) {
 			return this.optional(element) || /^[a-zA-Z0-9._-]+@[a-zA-Z0-9-]+\.[a-zA-Z.]{2,40}$/i.test(value);
 		}, "Please enter a valid email address.");
-
-		$.validator.addMethod("validatorDate",
-				function(value, element) {
-					return value.match(/^(0?[1-9]|[12][0-9]|3[0-1])[/., -](0?[1-9]|1[0-2])[/., -](19|20)?\d{2}$/);
-				},
-				"Please enter a date in the format dd/mm/yyyy!"
-		);
+		$.validator.addMethod("validatorDate", function(value, element) {
+			return value.match(/^(0?[1-9]|[12][0-9]|3[0-1])[/., -](0?[1-9]|1[0-2])[/., -](19|20)?\d{2}$/);
+		}, "Please enter a date in the format dd/mm/yyyy!");
         $.validator.addMethod("validatorQuestion4Group",
             function(value, element) {
                 return $('input[name="question41"]').is(':checked') && 
