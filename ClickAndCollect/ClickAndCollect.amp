@@ -470,7 +470,7 @@
             var q5 = '%%=v(@q5)=%%'
 
             if (q1 != '') {
-                $.each(q1.split(/\|/), function(i, val) {
+                $.each(q1.split(/\,/), function(i, val) {
                     $('input[name="question1"][value="' + val + '"]').prop('checked', true);
                 })
             }
