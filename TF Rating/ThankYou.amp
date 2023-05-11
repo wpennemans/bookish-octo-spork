@@ -68,8 +68,8 @@
             "QK_BURGER_TF_RATING",
             ["CARD_NUMBER", "PRODUCT_ID"],
             [cardNumber, productid],
-            ["MODIFIED_DT", "CARD_NUMBER", "PRODUCT_ID", "RATING"],
-            [now,cardNumber,productid,score]
+            ["MODIFIED_DT", "RATING"],
+            [now, score]
         );
 
     } catch (err) {
