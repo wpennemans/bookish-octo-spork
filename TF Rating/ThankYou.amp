@@ -1,6 +1,8 @@
 <!--
 %%[
 
+    set @isError = false
+
     /*********
     ** Lookup user based on subscriberKey and populate userLanguage
     *********/
@@ -16,6 +18,8 @@
         set @row = row(@rows,1) 
         set @userLanguage = field(@row,"LANGUAGE")
         set @cardNumber = field(@row,"CARD_NUMBER")
+    else
+        set @isError = true
     endif
 
     /*********
