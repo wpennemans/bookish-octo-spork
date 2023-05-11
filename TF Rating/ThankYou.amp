@@ -56,14 +56,6 @@
     SET @productid = RequestParameter('product_id')
 ]%%
 
-%%=v(@scriptOpen)=%%
-    console.log('requestLanguage', `%%=v(@requestLanguage)=%%`);
-    console.log('userLanguage', `%%=v(@userLanguage)=%%`);
-    console.log('displayLanguage', `%%=v(@displayLanguage)=%%`);
-    console.log('score', `%%=v(@score)=%%`);
-    console.log('productid', `%%=v(@productid)=%%`);
-%%=v(@scriptClose)=%%
-
 <script runat="server">
     Platform.Load("Core", "1");
     
@@ -119,6 +111,15 @@
 
 </script>
 
+%%=v(@scriptOpen)=%%
+    console.log('requestLanguage', `%%=v(@requestLanguage)=%%`);
+    console.log('userLanguage', `%%=v(@userLanguage)=%%`);
+    console.log('displayLanguage', `%%=v(@displayLanguage)=%%`);
+    console.log('score', `%%=v(@score)=%%`);
+    console.log('productid', `%%=v(@productid)=%%`);
+    console.log('errMsg', `%%=v(@errMsg)=%%`);
+%%=v(@scriptClose)=%%
+
 %%[
     IF @isError == true THEN
         SET @title = iif(@displayLanguage == 'nl-BE', 'something went wrong!', 'something went wrong!')
@@ -131,7 +132,7 @@
     ELSEIF @score >= 4 AND @displayLanguage == 'nl-BE' THEN
         SET @title = 'Super dat je hem lekker vond!'
         SET @subtitle = 'Twijfel niet om je vrienden aan te raden hem ook te proeven.'
-    ELSEIF @score <= 3 AND @displayLanguage != 'nl-BE' THEN
+    ELSEIF @score >=4 AND @displayLanguage != 'nl-BE' THEN
         SET @title = 'Super que tu l''as aimé!'
         SET @subtitle = 'N''hésite pas à inviter tes amis à le gôuter aussi.'
     ENDIF
