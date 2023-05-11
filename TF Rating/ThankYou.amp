@@ -76,7 +76,7 @@
         var isError = true;
         Variable.SetValue('isError', isError);
         Variable.SetValue('errMsg', err)
-        Write("<br>err: " + Stringify(err));
+        Write("<br>error: " + Stringify(err));
     }
 
 </script>
