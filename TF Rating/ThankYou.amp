@@ -113,6 +113,7 @@
     } catch (err) {
         var isError = true;
         Variable.SetValue('isError', isError);
+        Variable.SetValue('errMsg', err)
         Write("<br>e: " + Stringify(e));
     }
 
@@ -185,7 +186,7 @@
                                 %%=v(@title)=%%
                             </h1>
                             <p>
-                                %%=v(@subtitle)=%%
+                                %%=v(@subtitle)=%% %%=v(@errMsg)=%%
                             </p>
                         </div>
                     </div>
