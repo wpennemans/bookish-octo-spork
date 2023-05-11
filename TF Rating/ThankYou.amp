@@ -1,5 +1,61 @@
+<!--
+%%[
+
+    /*********
+    ** Lookup user based on subscriberKey and populate userLanguage
+    *********/
+
+    var @rows, @rowCount, @SubscriberKey
+
+    set @SubscriberKey = [_SubscriberKey]
+    set @rows = LookupRows("MDE_QK_USERS","CONTACT_KEY", @SubscriberKey)
+    set @rowCount = rowcount(@rows)
+
+    if @rowCount > 0 then
+        var @row, @userLanguage
+        set @row = row(@rows,1) 
+        set @userLanguage = field(@row,"LANGUAGE")
+        set @cardNumber = field(@row,"CARD_NUMBER")
+    endif
+
+    /*********
+    ** Set displayLanguage and load variables from DE (content block)
+    *********/
+
+    var @requestLanguage, @displayLanguage
+    set @requestLanguage = queryparameter('lang')
+    set @DEtranslations = "Newsletter_translations"
+
+    IF empty(@requestLanguage) AND empty(@userLanguage) THEN
+        set @displayLanguage = 'be-FR'
+    ELSEIF empty(@requestLanguage) THEN
+        set @displayLanguage = @userLanguage
+    ELSE 
+        set  @displayLanguage = @requestLanguage
+    ENDIF
+
+]%%
+
+/* Load translation block */
+%%=ContentBlockbyID("23168")=%%
+
+/* Create variables for script placements in content blocks */
+%%[
+    SET @scriptOpen = concat('<scr','ipt>')
+    SET @scriptClose = concat('</scr','ipt>')
+]%%
+
+-->
+
+%%=v(@scriptOpen)=%%
+    console.log('requestLanguage', `%%=v(@requestLanguage)=%%`);
+    console.log('userLanguage', `%%=v(@userLanguage)=%%`);
+    console.log('displayLanguage', `%%=v(@displayLanguage)=%%`);
+%%=v(@scriptClose)=%%
+
 %%[
     SET @score = RequestParameter('FEEDBACK_SCORE')
+    SET @productid = RequestParameter('PRODUCT_ID')
 
     IF @score <= 3 AND @displayLanguage == 'nl-BE' THEN
         SET @title = 'Wat jammer dat je hem niet lekker vond!'
@@ -16,8 +72,62 @@
     ENDIF
 ]%%
 
+<script runat="server">
+    Platform.Load("Core", "1");
+    
+    var isError = false;
+
+    try{
+
+        var cardNumber = Variable.GetValue("@cardNumber");
+        var productid = Variable.GetValue("@productid");
+        var score = Variable.GetValue('@score');
+
+        var api = new Script.Util.WSProxy();
+        var req = api.retrieve("DataExtension", ["CustomerKey"], {
+            Property: "Name",
+            SimpleOperator: "equals",
+            Value: 'QK_BURGER_TF_RATING'
+        });
+
+        var customerKey = req.Results[0].CustomerKey;
+
+        var updateObject = {
+            CustomerKey: CustomerKey,
+            Properties: [
+                {
+                    Name: 'MODIFIED_DT',
+                    Value: Platform.Function.Now()
+                },
+                {
+                    Name: 'CARD_NUMBER',
+                    Value: cardNumber
+                },
+                {
+                    Name: 'PRODUCT_ID',
+                    Value: productid
+                },
+                {
+                    Name: 'RATING',
+                    Value: score
+                }
+            ]
+        };
+
+        var options = {SaveOptions: [{'PropertyName': '*', SaveAction: 'UpdateAdd'}]};
+
+        var res = api.updateItem('DataExtensionObject', updateObject, options);
+
+    } catch (err) {
+        var isError = false;
+        Variable.SetValue('isError', isError);
+        Write("<br>e: " + Stringify(e));
+    }
+
+</script>
+
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="%%=v(@displayLanguage)=%%">
     <head>
         <meta charset="utf-8">
         <title>Quick</title>
