@@ -10,14 +10,14 @@
     var @rows, @rowCount, @SubscriberKey
 
     set @SubscriberKey = [_SubscriberKey]
-    set @rows = LookupRows("MDE_QK_USERS","CONTACT_KEY", @SubscriberKey)
+    set @rows = LookupRows("MDE_QK_USERS", "CONTACT_KEY", @SubscriberKey)
     set @rowCount = rowcount(@rows)
 
     if @rowCount > 0 then
         var @row, @userLanguage
-        set @row = row(@rows,1) 
-        set @userLanguage = field(@row,"LANGUAGE")
-        set @cardNumber = field(@row,"CARD_NUMBER")
+        set @row = row(@rows, 1) 
+        set @userLanguage = field(@row, "LANGUAGE")
+        set @cardNumber = field(@row, "CARD_NUMBER")
     else
         set @isError = true
     endif
@@ -35,7 +35,7 @@
     ELSEIF empty(@requestLanguage) THEN
         set @displayLanguage = @userLanguage
     ELSE 
-        set  @displayLanguage = @requestLanguage
+        set @displayLanguage = @requestLanguage
     ENDIF
 
 ]%%
@@ -43,98 +43,34 @@
 /* Load translation block */
 %%=ContentBlockbyID("23168")=%%
 
-/* Create variables for script placements in content blocks */
 %%[
     SET @scriptOpen = concat('<scr','ipt>')
     SET @scriptClose = concat('</scr','ipt>')
-]%%
 
--->
-
-%%[
     SET @score = RequestParameter('score')
     SET @productid = RequestParameter('product_id')
 ]%%
+-->
 
 <script runat="server">
     Platform.Load("Core", "1");
     
     var isError = false;
+    var now = Platform.Function.Now();
 
     try{
 
         var cardNumber = Variable.GetValue("@cardNumber");
         var productid = Variable.GetValue("@productid");
         var score = Variable.GetValue('@score');
-
-        /* var prox = new Script.Util.WSProxy();
-        var req = api.retrieve("DataExtension", ["CustomerKey"], {
-            Property: "Name",
-            SimpleOperator: "equals",
-            Value: 'QK_BURGER_TF_RATING'
-        });
-
-        var customerKey = req.Results[0].CustomerKey;
-
-        Verify if an existing rating for CARD_NUMBER and PRODUCT_ID is logged already
-        var cols = ["CARD_NUMBER", "PRODUCT_ID", "RATING"];
-        var filter = {
-            LeftOperand: {
-                Property: "CARD_NUMBER",
-                SimpleOperator: "equals",
-                Value: cardNumber
-            },
-            LogicalOperator: "AND",
-            RightOperand: {
-                Property: "PRODUCT_ID",
-                SimpleOperator: "equals",
-                Value: productid
-            }
-        };     
-      
-        var res = prox.retrieve("DataExtensionObject[" + customerKey + "]", cols, filter);
-        
-        var count = 0;
-        if(res != null) {
-            if(res && res.Results) {
-                count = Number(res['Results'].length);
-            }
-        }; */
-
         
         var rows = Platform.Function.UpsertData(
             "QK_BURGER_TF_RATING",
             ["CARD_NUMBER", "PRODUCT_ID"],
             [cardNumber, productid],
-            ["MODIFIED_DT","CARD_NUMBER","PRODUCT_ID","RATING"],
-            [Platform.Function.Now(),cardNumber,productid,score]
+            ["MODIFIED_DT", "CARD_NUMBER", "PRODUCT_ID", "RATING"],
+            [now,cardNumber,productid,score]
         );
-/* 
-        var updateObject = {
-            CustomerKey: CustomerKey,
-            Properties: [
-                {
-                    Name: 'MODIFIED_DT',
-                    Value: Platform.Function.Now()
-                },
-                {
-                    Name: 'CARD_NUMBER',
-                    Value: cardNumber
-                },
-                {
-                    Name: 'PRODUCT_ID',
-                    Value: productid
-                },
-                {
-                    Name: 'RATING',
-                    Value: score
-                }
-            ]
-        };
-
-        var options = {SaveOptions: [{'PropertyName': '*', SaveAction: 'UpdateAdd'}]};
-
-        var res = api.updateItem('DataExtensionObject', updateObject, options); */
 
     } catch (err) {
         var isError = true;
@@ -222,7 +158,7 @@
                                 %%=v(@title)=%%
                             </h1>
                             <p>
-                                %%=v(@subtitle)=%% %%=v(@errMsg)=%%
+                                %%=v(@subtitle)=%%
                             </p>
                         </div>
                     </div>
