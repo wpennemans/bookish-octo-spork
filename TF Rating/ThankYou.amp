@@ -87,7 +87,7 @@
     console.log('displayLanguage', `%%=v(@displayLanguage)=%%`);
     console.log('score', `%%=v(@score)=%%`);
     console.log('productid', `%%=v(@productid)=%%`);
-    console.log('errMsg', `%%=v(@errMsg)=%%`);
+    console.log('errMsg', `%%=Stringify(@errMsg)=%%`);
 %%=v(@scriptClose)=%%
 
 %%[
