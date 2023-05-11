@@ -1,0 +1,103 @@
+%%[
+    SET @score = RequestParameter('FEEDBACK_SCORE')
+
+    IF @score <= 3 AND @displayLanguage == 'nl-BE' THEN
+        SET @title = 'Wat jammer dat je hem niet lekker vond!'
+        SET @subtitle = 'Toch bedankt om eens te proeven en de waardevolle feedback!'
+    ELSEIF @score <= 3 AND @displayLanguage != 'nl-BE' THEN
+        SET @title = 'Dommage que tu ne l''as pas aimé!'
+        SET @subtitle = 'Merci pour le goût et votre avis précieux.'
+    ELSEIF @score >= 4 AND @displayLanguage == 'nl-BE' THEN
+        SET @title = 'Super dat je hem lekker vond!'
+        SET @subtitle = 'Twijfel niet om je vrienden aan te raden hem ook te proeven.'
+    ELSEIF @score <= 3 AND @displayLanguage != 'nl-BE' THEN
+        SET @title = 'Super que tu l''as aimé!'
+        SET @subtitle = 'N''hésite pas à inviter tes amis à le gôuter aussi.'
+    ENDIF
+]%%
+
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="utf-8">
+        <title>Quick</title>
+        <meta name="description" content="">
+        <meta name="twitter:card" content="summary" />
+        <meta property="og:title" content="Quick" />
+        <meta property="og:description" content="" />
+        <meta property="og:type" content="website" />
+        <meta property="og:image" content="https://image.mail.quick.be/lib/fe3411737364047e711674/m/1/5bd576bd-7a78-4cc4-9377-19632e5ad80a.png" />
+        <link rel="icon" href="https://image.mail.quick.be/lib/fe3411737364047e711674/m/1/5bd576bd-7a78-4cc4-9377-19632e5ad80a.png" type="image/png">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+        <style>
+            %%=TreatAsContent(HTTPGet(''))=%%
+        </style>
+    </head>
+
+    <body>
+        <div class="main-layout">
+            <!-- head: will stick at the top -->
+            <div class="head">
+                <!-- HEAD -->
+                <header class="header">
+                    <div class="container">
+                        <nav class="header-nav">
+                            <div class="left">
+                                <div class="logo-quick">
+                                    <img src="https://s3.eu-central-1.amazonaws.com/quickbelux/web/img/logo2-quick.svg">
+                                </div>
+                            </div>
+                        </nav>
+                    </div>
+                </header>
+                <!--/ HEAD -->
+            </div>
+
+            <!-- body: will be in the middle -->
+            <div class="body body-split" style="background-image:url('../images/bg.png');">
+                <!-- BODY -->
+
+                <div class="wrapper is-left">
+                    <div class="container is-tiny">
+                        <div class="content content-index">
+                            <h1 class="title">
+                                %%=v(@title)=%%
+                            </h1>
+                            <p>
+                                %%=v(@subtitle)=%%
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="wrapper is-right" style="background-image:url('https://image.mail.quick.be/lib/fe3411737364047e711674/m/1/18b51794-7ac1-41b5-bcb3-0e41a711afe2.png');">
+                    <div class="container is-small">
+                        <div class="list-rating">
+                            <div class="el">
+                                <div class="rating %%=iif(@score == '1', 'is-active', '')=%%">1</div>
+                            </div>
+                            <div class="el">
+                                <div class="rating %%=iif(@score == '2', 'is-active', '')=%%">2</div>
+                            </div>
+                            <div class="el">
+                                <div class="rating %%=iif(@score == '3', 'is-active', '')=%%">3</div>
+                            </div>
+                            <div class="el">
+                                <div class="rating %%=iif(@score == '4', 'is-active', '')=%%">4</div>
+                            </div>
+                            <div class="el">
+                                <div class="rating %%=iif(@score == '5', 'is-active', '')=%%">5</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!--/ BODY  -->
+            </div>
+        </div>
+        <script>
+            %%=TreatAsContent(HTTPGet(''))=%%
+        </script>
+    </body>
+</html>
