@@ -64,7 +64,7 @@
         return !!value && (value >= low && value <= high);
     }
 
-    Write('<br> method:' + Stringify(Platform.Request.Method))
+    Write('<br> method:' + Stringify(Platform.Request.Method)) 
 
     if (Platform.Request.Method == "POST") {
 
