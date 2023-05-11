@@ -67,7 +67,7 @@
         var productid = Variable.GetValue("@productid");
         var score = Variable.GetValue('@score');
 
-        var api = new Script.Util.WSProxy();
+        /* var prox = new Script.Util.WSProxy();
         var req = api.retrieve("DataExtension", ["CustomerKey"], {
             Property: "Name",
             SimpleOperator: "equals",
@@ -76,6 +76,40 @@
 
         var customerKey = req.Results[0].CustomerKey;
 
+        Verify if an existing rating for CARD_NUMBER and PRODUCT_ID is logged already
+        var cols = ["CARD_NUMBER", "PRODUCT_ID", "RATING"];
+        var filter = {
+            LeftOperand: {
+                Property: "CARD_NUMBER",
+                SimpleOperator: "equals",
+                Value: cardNumber
+            },
+            LogicalOperator: "AND",
+            RightOperand: {
+                Property: "PRODUCT_ID",
+                SimpleOperator: "equals",
+                Value: productid
+            }
+        };     
+      
+        var res = prox.retrieve("DataExtensionObject[" + customerKey + "]", cols, filter);
+        
+        var count = 0;
+        if(res != null) {
+            if(res && res.Results) {
+                count = Number(res['Results'].length);
+            }
+        }; */
+
+        
+        var rows = Platform.Function.UpsertData(
+            "QK_BURGER_TF_RATING",
+            ["CARD_NUMBER", "PRODUCT_ID"],
+            [cardNumber, productid],
+            ["MODIFIED_DT","CARD_NUMBER","PRODUCT_ID","RATING"],
+            [Platform.Function.Now(),cardNumber,productid,score]
+        );
+/* 
         var updateObject = {
             CustomerKey: CustomerKey,
             Properties: [
@@ -100,7 +134,7 @@
 
         var options = {SaveOptions: [{'PropertyName': '*', SaveAction: 'UpdateAdd'}]};
 
-        var res = api.updateItem('DataExtensionObject', updateObject, options);
+        var res = api.updateItem('DataExtensionObject', updateObject, options); */
 
     } catch (err) {
         var isError = true;
@@ -122,7 +156,8 @@
 
 %%[
     IF @isError == true THEN
-        SET @title = iif(@displayLanguage == 'nl-BE', 'something went wrong!', 'something went wrong!')
+        SET @title = iif(@displayLanguage == 'nl-BE', 'Oeps...', 'Oups...')
+        SET @subtitle = iif(@displayLanguage == 'nl-BE', 'er is iets misgegaan', 'quelque chose s''est mal passé')
     ELSEIF @score <= 3 AND @displayLanguage == 'nl-BE' THEN
         SET @title = 'Wat jammer dat je hem niet lekker vond!'
         SET @subtitle = 'Toch bedankt om eens te proeven en de waardevolle feedback!'
