@@ -31,7 +31,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
         <style>
-            %%=TreatAsContent(HTTPGet(''))=%%
+            %%=TreatAsContent(HTTPGet('https://raw.githubusercontent.com/wpennemans/bookish-octo-spork/main/TF%20Rating/style.css'))=%%
         </style>
     </head>
 
@@ -97,7 +97,7 @@
             </div>
         </div>
         <script>
-            %%=TreatAsContent(HTTPGet(''))=%%
+            %%=TreatAsContent(HTTPGet('https://raw.githubusercontent.com/wpennemans/bookish-octo-spork/main/TF%20Rating/script.js'))=%%
         </script>
     </body>
 </html>
