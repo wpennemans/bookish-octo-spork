@@ -56,20 +56,6 @@
 %%[
     SET @score = RequestParameter('FEEDBACK_SCORE')
     SET @productid = RequestParameter('PRODUCT_ID')
-
-    IF @score <= 3 AND @displayLanguage == 'nl-BE' THEN
-        SET @title = 'Wat jammer dat je hem niet lekker vond!'
-        SET @subtitle = 'Toch bedankt om eens te proeven en de waardevolle feedback!'
-    ELSEIF @score <= 3 AND @displayLanguage != 'nl-BE' THEN
-        SET @title = 'Dommage que tu ne l''as pas aimé!'
-        SET @subtitle = 'Merci pour le goût et votre avis précieux.'
-    ELSEIF @score >= 4 AND @displayLanguage == 'nl-BE' THEN
-        SET @title = 'Super dat je hem lekker vond!'
-        SET @subtitle = 'Twijfel niet om je vrienden aan te raden hem ook te proeven.'
-    ELSEIF @score <= 3 AND @displayLanguage != 'nl-BE' THEN
-        SET @title = 'Super que tu l''as aimé!'
-        SET @subtitle = 'N''hésite pas à inviter tes amis à le gôuter aussi.'
-    ENDIF
 ]%%
 
 <script runat="server">
@@ -119,12 +105,30 @@
         var res = api.updateItem('DataExtensionObject', updateObject, options);
 
     } catch (err) {
-        var isError = false;
+        var isError = true;
         Variable.SetValue('isError', isError);
         Write("<br>e: " + Stringify(e));
     }
 
 </script>
+
+%%[
+    IF @isError == true THEN
+        SET @title = iif(@displayLanguage == 'nl-BE', 'something went wrong!', 'something went wrong!')
+    ELSEIF @score <= 3 AND @displayLanguage == 'nl-BE' THEN
+        SET @title = 'Wat jammer dat je hem niet lekker vond!'
+        SET @subtitle = 'Toch bedankt om eens te proeven en de waardevolle feedback!'
+    ELSEIF @score <= 3 AND @displayLanguage != 'nl-BE' THEN
+        SET @title = 'Dommage que tu ne l''as pas aimé!'
+        SET @subtitle = 'Merci pour le goût et votre avis précieux.'
+    ELSEIF @score >= 4 AND @displayLanguage == 'nl-BE' THEN
+        SET @title = 'Super dat je hem lekker vond!'
+        SET @subtitle = 'Twijfel niet om je vrienden aan te raden hem ook te proeven.'
+    ELSEIF @score <= 3 AND @displayLanguage != 'nl-BE' THEN
+        SET @title = 'Super que tu l''as aimé!'
+        SET @subtitle = 'N''hésite pas à inviter tes amis à le gôuter aussi.'
+    ENDIF
+]%%
 
 <!DOCTYPE html>
 <html lang="%%=v(@displayLanguage)=%%">
