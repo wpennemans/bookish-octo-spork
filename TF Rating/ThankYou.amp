@@ -28,7 +28,6 @@
 
     var @requestLanguage, @displayLanguage
     set @requestLanguage = queryparameter('lang')
-    set @DEtranslations = "Newsletter_translations"
 
     IF empty(@requestLanguage) AND empty(@userLanguage) THEN
         set @displayLanguage = 'be-FR'
@@ -38,12 +37,6 @@
         set @displayLanguage = @requestLanguage
     ENDIF
 
-]%%
-
-/* Load translation block */
-%%=ContentBlockbyID("23168")=%%
-
-%%[
     SET @scriptOpen = concat('<scr','ipt>')
     SET @scriptClose = concat('</scr','ipt>')
 
@@ -76,7 +69,6 @@
         var isError = true;
         Variable.SetValue('isError', isError);
         Variable.SetValue('errMsg', err)
-        Write("<br>error: " + Stringify(err));
     }
 
 </script>
@@ -118,8 +110,8 @@
         <meta property="og:title" content="Quick" />
         <meta property="og:description" content="" />
         <meta property="og:type" content="website" />
-        <meta property="og:image" content="https://image.mail.quick.be/lib/fe3411737364047e711674/m/1/5bd576bd-7a78-4cc4-9377-19632e5ad80a.png" />
-        <link rel="icon" href="https://image.mail.quick.be/lib/fe3411737364047e711674/m/1/5bd576bd-7a78-4cc4-9377-19632e5ad80a.png" type="image/png">
+        <meta property="og:image" content="https://s3.eu-central-1.amazonaws.com/quickbelux/web/img/favicon.png" />
+        <link rel="icon" href="https://s3.eu-central-1.amazonaws.com/quickbelux/web/img/favicon.png" type="image/png">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
         <style>
@@ -147,7 +139,7 @@
             </div>
 
             <!-- body: will be in the middle -->
-            <div class="body body-split" style="background-image:url('../images/bg.png');">
+            <div class="body body-split">
                 <!-- BODY -->
 
                 <div class="wrapper is-left">
