@@ -64,8 +64,6 @@
         return !!value && (value >= low && value <= high);
     }
 
-    Write('<br> method:' + Stringify(Platform.Request.Method)) 
-
     if (Platform.Request.Method == "POST") {
 
         var Q1 = Platform.Request.GetFormField("question1");
@@ -147,6 +145,8 @@
 
             Variable.SetValue('@submitted', true);
             Variable.SetValue('@result', result.status);
+            Write(' <br> result: ' result) 
+            Write(' <br> status: ' result.status) 
         } else {
             Variable.SetValue("@Q1", Q1);
             Variable.SetValue("@Q2", Q2);
