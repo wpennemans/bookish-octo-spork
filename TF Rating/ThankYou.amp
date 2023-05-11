@@ -51,16 +51,18 @@
 
 -->
 
+%%[
+    SET @score = RequestParameter('score')
+    SET @productid = RequestParameter('product_id')
+]%%
+
 %%=v(@scriptOpen)=%%
     console.log('requestLanguage', `%%=v(@requestLanguage)=%%`);
     console.log('userLanguage', `%%=v(@userLanguage)=%%`);
     console.log('displayLanguage', `%%=v(@displayLanguage)=%%`);
+    console.log('score', `%%=v(@score)=%%`);
+    console.log('productid', `%%=v(@productid)=%%`);
 %%=v(@scriptClose)=%%
-
-%%[
-    SET @score = RequestParameter('FEEDBACK_SCORE')
-    SET @productid = RequestParameter('PRODUCT_ID')
-]%%
 
 <script runat="server">
     Platform.Load("Core", "1");
