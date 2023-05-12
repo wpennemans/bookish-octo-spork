@@ -587,5 +587,8 @@
                 
             </script>
         %%[ ENDIF ]%%
+        <script>
+            console.log('version 2');
+        </script>
     </body>
 </html>
