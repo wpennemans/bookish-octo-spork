@@ -144,11 +144,12 @@
                 CustomerKey: customerKey,
                 Properties: data
             });
+            var jsonResult = Platform.Function.ParseJSON(result);
 
             Variable.SetValue('@submitted', true);
-            Variable.SetValue('@result', result.status);
-            Write(' <br> result: ' + Stringify(result)) ;
-            Write(' <br> status: ' + Stringify(result.status));
+            Variable.SetValue('@result', Stringify(jsonResult.status));
+            Write(' <br> result: ' + Stringify(jsonResult)) ;
+            Write(' <br> status: ' + Stringify(jsonResult.status));
         } else {
             Variable.SetValue("@Q1", Q1);
             Variable.SetValue("@Q2", Q2);
