@@ -120,11 +120,11 @@ var clsValidate = (function(){
         });
 
 		$(document).on("click", "#Q5_1", function(){
-			$("#question5sub").style.display = "block";
+			$("#question5sub").show();
 		});
 
 		$(document).on("click", "#Q5_2", function(){
-			$("#question5sub").style.display = "none";
+			$("#question5sub").hide();
 		});
 	};
 	return {
