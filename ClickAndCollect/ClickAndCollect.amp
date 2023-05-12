@@ -146,11 +146,9 @@
                 Properties: data
             });
             var status = res.Results[0].StatusCode;
-            var jsonResponse = Platform.Function.ParseJSON(res.Results);
 
             Variable.SetValue('@submitted', true);
             Variable.SetValue('@result', status);
-            Write(' <br> resultres: ' + Stringify(jsonResponse));
             Write(' <br> status: ' + Stringify(status));
         } else {
             Variable.SetValue("@Q1", Q1);
@@ -589,7 +587,7 @@
             </script>
         %%[ ENDIF ]%%
         <script>
-            console.log('version 5');
+            console.log('version 6');
         </script>
     </body>
 </html>
