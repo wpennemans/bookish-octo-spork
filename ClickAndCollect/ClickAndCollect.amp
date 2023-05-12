@@ -145,9 +145,10 @@
                 Properties: data
             });
             var jsonResult = Platform.Function.ParseJSON(result);
+            var status = Stringify(jsonResult.status);
 
             Variable.SetValue('@submitted', true);
-            Variable.SetValue('@result', Stringify(jsonResult.status));
+            Variable.SetValue('@result', status);
             Write(' <br> result: ' + Stringify(jsonResult)) ;
             Write(' <br> status: ' + Stringify(jsonResult.status));
         } else {
