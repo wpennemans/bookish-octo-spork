@@ -53,15 +53,15 @@
     IF @displayLanguage == 'nl-BE' THEN
         SET @ctaUrl = 'https://www.quick.be/nl/myquick'
         SET @ctaCaption = 'Open MyQuick'
-        SET @title = 'Bedankt <br />voor je&nbsp;hulp!'
+        SET @successtitle = 'Bedankt <br />voor je&nbsp;hulp!'
     ELSEIF @displayLanguage == 'fr-LU' THEN
         SET @ctaUrl = 'https://www.quick.lu/fr/myquick'
         SET @ctaCaption = 'Ouvre MyQuick'
-        SET @title = 'Merci <br />pour ton&nbsp;aide.'
+        SET @successtitle = 'Merci <br />pour ton&nbsp;aide.'
     ELSE
         SET @ctaUrl = 'https://www.quick.be/fr/myquick'
         SET @ctaCaption = 'Ouvre MyQuick'
-        SET @title = 'Merci <br />pour ton&nbsp;aide.'
+        SET @successtitle = 'Merci <br />pour ton&nbsp;aide.'
     ENDIF
 ]%%
 
@@ -202,7 +202,7 @@
                 <div class="banner-inner">
                     <div class="title">
                         <h1>
-                            %%=TreatAsContent(@title)=%%
+                            %%=TreatAsContent(@successtitle)=%%
                         </h1>
                     </div>
                     <a href="%%=v(@ctaUrl)=%%">
@@ -549,7 +549,7 @@
                                 <h4>
                                     %%=v(@lblQuestion5ExtraTitle)=%%
                                 </h4>
-                                <textarea id="question5sub" name="question5sub">
+                                <textarea id="question5sub" name="question5sub" style="display:none">
                                     %%=v(@Q5_extra)=%%
                                 </textarea>
                             </div>

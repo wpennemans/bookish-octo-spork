@@ -118,6 +118,14 @@ var clsValidate = (function(){
                 }
             }
         });
+
+		$(document).on("click", "#Q5_1", function(){
+			$("#question5sub").style.display = "block";
+		});
+
+		$(document).on("click", "#Q5_2", function(){
+			$("#question5sub").style.display = "none";
+		});
 	};
 	return {
 		init:init,
