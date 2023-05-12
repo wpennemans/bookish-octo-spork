@@ -144,8 +144,8 @@
                 CustomerKey: customerKey,
                 Properties: data
             });
-            var jsonResult = Platform.Function.ParseJSON(result);
-            var status = Stringify(jsonResult.Response[0]);
+            var jsonResult = Platform.Function.ParseJSON(jsonResult.Response[0]);
+            var status = Stringify(jsonResult);
 
             Variable.SetValue('@submitted', true);
             Variable.SetValue('@result', status);
