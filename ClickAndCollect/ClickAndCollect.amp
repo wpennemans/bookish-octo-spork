@@ -49,6 +49,20 @@
 
         NEXT @i 
     ENDIF      
+
+    IF @displayLanguage == 'nl-BE' THEN
+        SET @ctaUrl = 'https://www.quick.be/nl/myquick'
+        SET @ctaCaption = 'Open MyQuick'
+        SET @title = 'Bedankt <br />voor je&nbsp;hulp!'
+    ELSEIF @displayLanguage == 'fr-LU' THEN
+        SET @ctaUrl = 'https://www.quick.lu/fr/myquick'
+        SET @ctaCaption = 'Ouvre MyQuick'
+        SET @title = 'Merci <br />pour ton&nbsp;aide.'
+    ELSE
+        SET @ctaUrl = 'https://www.quick.be/fr/myquick'
+        SET @ctaCaption = 'Ouvre MyQuick'
+        SET @title = 'Merci <br />pour ton&nbsp;aide.'
+    ENDIF
 ]%%
 
 <script runat=server language="javascript">
@@ -149,7 +163,6 @@
 
             Variable.SetValue('@submitted', true);
             Variable.SetValue('@result', status);
-            Write(' <br> status: ' + Stringify(status));
         } else {
             Variable.SetValue("@Q1", Q1);
             Variable.SetValue("@Q2", Q2);
@@ -184,17 +197,18 @@
         
         %%[ IF @result == 'OK' AND @submitted == true THEN ]%%
             <section class='block-banner'>
-                <img class="bg-desktop" src="[%resource('LONGTALE/QUICK/CAMPAIGNS/VARIA/CLICK_AND_COLLECT_SURVEY/img/thankyou-bg.jpg')%]" alt="thank you">
-                <img class="bg-mobile" src="[%resource('LONGTALE/QUICK/CAMPAIGNS/VARIA/CLICK_AND_COLLECT_SURVEY/img/thankyou-bg-mobile.jpg')%]" alt="thank you">
+                <img class="bg-desktop" src="https://image.mail.quick.be/lib/fe3411737364047e711674/m/1/7e86cbd9-c856-4956-a836-e6e53e59ed25.jpg" alt="thank you">
+                <img class="bg-mobile" src="https://image.mail.quick.be/lib/fe3411737364047e711674/m/1/f0b717de-9fdb-4e33-8f4d-866f74cfd27a.jpg" alt="thank you">
                 <div class="banner-inner">
-
-                        <div class="title">
-                            <h1><sg:content id="text-1" /></h1>
-
-                        </div>				
-                        <sg:content id="cta" />
+                    <div class="title">
+                        <h1>
+                            %%=TreatAsContent(@title)=%%
+                        </h1>
+                    </div>
+                    <a href="%%=v(@ctaUrl)=%%">
+                        %%=v(@ctaCaption)=%%
+                    </a>	
                 </div>
-
             </section>
         %%[ ELSE ]%%
             <div class="block-banner survey-banner ">
@@ -586,8 +600,5 @@
                 
             </script>
         %%[ ENDIF ]%%
-        <script>
-            console.log('version 6');
-        </script>
     </body>
 </html>
