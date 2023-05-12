@@ -145,12 +145,12 @@
                 CustomerKey: customerKey,
                 Properties: data
             });
-            var status = res.Results[0].Status;
+            var status = res.Results[0].StatusCode;
+            var jsonResponse = Platform.Function.ParseJSON(res.Results);
 
             Variable.SetValue('@submitted', true);
             Variable.SetValue('@result', status);
-            Write(' <br> result: ' + Stringify(res));
-            Write(' <br> resultres: ' + Stringify(res.Results));
+            Write(' <br> resultres: ' + Stringify(jsonResponse));
             Write(' <br> status: ' + Stringify(status));
         } else {
             Variable.SetValue("@Q1", Q1);
@@ -589,7 +589,7 @@
             </script>
         %%[ ENDIF ]%%
         <script>
-            console.log('version 4');
+            console.log('version 5');
         </script>
     </body>
 </html>
