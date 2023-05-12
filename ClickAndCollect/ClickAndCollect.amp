@@ -24,7 +24,8 @@
     /* Set displayLanguage */
     VAR @displayLanguage
     SET @displayLanguage = iif(Empty(RequestParameter('lang')), attributeValue('LANGUAGE'), RequestParameter('lang'))
-    
+    SET @cardNumber = attributeValue('CARD_NUMBER');
+
     IF @displayLanguage != 'nl-BE' AND @displayLanguage != 'fr-LU' THEN
        SET @displayLanguage = 'fr-BE'
     ENDIF
@@ -55,6 +56,7 @@
 
     Variable.SetValue("@refJS", "https://raw.githubusercontent.com/wpennemans/bookish-octo-spork/main/ClickAndCollect/script.js");
     Variable.SetValue("@refCSS", "https://raw.githubusercontent.com/wpennemans/bookish-octo-spork/main/ClickAndCollect/style.css");
+    var cardNumber = Variable.GetValue("@cardNumber")
 
     function validateEmpty(value){
         return !!value;
